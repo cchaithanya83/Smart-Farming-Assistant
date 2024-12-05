@@ -1,0 +1,2 @@
+*.h5 filter=lfs diff=lfs merge=lfs -text
+backend/models/plant_disease_prediction_model.h5 filter=lfs diff=lfs merge=lfs -text

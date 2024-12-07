@@ -12,10 +12,8 @@ const FertilizerRecommendation: React.FC = () => {
     potassium: "",
     phosphorous: "",
   });
-  const [result, setResult] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [result, setResult] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -25,56 +23,47 @@ const FertilizerRecommendation: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
 
-    const queryParams = new URLSearchParams({
-      temperature: inputs.temperature,
-      humidity: inputs.humidity,
-      moisture: inputs.moisture,
-      soil_type: inputs.soilType,
-      crop_type: inputs.cropType,
-      nitrogen: inputs.nitrogen,
-      potassium: inputs.potassium,
-      phosphorous: inputs.phosphorous,
-    }).toString();
+    const queryParams = new URLSearchParams(inputs).toString();
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/recommend-fertilizer/?${queryParams}`
+        `http://localhost:8000/recommend-fertilizer/?${queryParams}`
       );
       setResult(response.data.recommended_fertilizer);
-      setShowModal(true); // Show modal on successful response
-    } catch (err) {
-      setError("Failed to fetch recommendation. Please try again.");
-    } finally {
-      setLoading(false);
+      setShowModal(true); // Show the modal with the result
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className="p-6 bg-gray-100 dark:bg-gray-800 justify-center shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+    <div className="p-6 bg-gray-100 dark:bg-[#1d203a] shadow-md min-h-screen flex flex-col items-center">
+      <h2 className="text-2xl font-bold text-gray-700 dark:text-white mb-6 text-center">
         Fertilizer Recommendation
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg space-y-4 bg-white dark:bg-[#1d203a] p-6 rounded-lg shadow-lg"
+      >
         {Object.keys(inputs).map((key) => (
           <div key={key}>
-            <label
-              htmlFor={key}
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-            >
+            <label className="block text-gray-700 dark:text-white mb-1">
               {key
                 .replace(/([A-Z])/g, " $1")
                 .replace(/^./, (str) => str.toUpperCase())}
             </label>
             {key === "soilType" || key === "cropType" ? (
               <select
-                id={key}
                 name={key}
                 value={inputs[key]}
                 onChange={handleChange}
-                className="w-full border border-gray-300 dark:border-gray-700 p-2 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded dark:bg-[#1d203a] dark:text-white focus:ring-2 focus:ring-blue-500"
                 required
               >
                 <option value="">Select {key}</option>
@@ -103,12 +92,11 @@ const FertilizerRecommendation: React.FC = () => {
               </select>
             ) : (
               <input
-                id={key}
                 type="number"
                 name={key}
                 value={inputs[key]}
                 onChange={handleChange}
-                className="w-full border border-gray-300 dark:border-gray-700 p-2 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded dark:bg-[#1d203a] dark:text-white focus:ring-2 focus:ring-blue-500"
                 required
               />
             )}
@@ -116,28 +104,25 @@ const FertilizerRecommendation: React.FC = () => {
         ))}
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-500"
-          disabled={loading}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full"
         >
-          {loading ? "Loading..." : "Submit"}
+          Submit
         </button>
       </form>
 
-      {error && (
-        <p className="mt-4 text-sm text-red-500 dark:text-red-400">{error}</p>
-      )}
-
-      {/* Modal for Result */}
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-800 rounded p-6 w-96">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white dark:bg-[#1d203a] p-6 rounded shadow-lg w-11/12 max-w-md">
+            <h3 className="text-lg font-bold text-gray-700 dark:text-white mb-4 text-center">
               Recommended Fertilizer
             </h3>
-            <p className="text-gray-700 dark:text-gray-300">{result}</p>
+            <p className="text-green-500 font-semibold text-lg mb-6 text-center">
+              {result}
+            </p>
             <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={closeModal}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition w-full"
             >
               Close
             </button>

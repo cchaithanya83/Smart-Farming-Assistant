@@ -57,9 +57,9 @@ const DiseaseDetection: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 dark:bg-gray-800 min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full bg-white dark:bg-gray-800 p-6 shadow-md rounded">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
+    <div className="p-6 bg-gray-100 dark:bg-[#1d203a] min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full bg-white dark:bg-[#272b4a] p-6 shadow-md rounded">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
           Disease Detection
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -75,7 +75,7 @@ const DiseaseDetection: React.FC = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#272b4a] dark:text-gray-200"
             />
           </div>
           <button
@@ -103,7 +103,7 @@ const DiseaseDetection: React.FC = () => {
           onClick={closeModal}
         >
           <div
-            className="bg-white dark:bg-gray-900 rounded p-6 shadow-lg max-w-sm w-full"
+            className="bg-white dark:bg-[#1d203a] rounded p-6 shadow-lg max-w-sm w-full"
             onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside
           >
             <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">

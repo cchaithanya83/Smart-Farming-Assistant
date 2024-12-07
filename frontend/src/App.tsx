@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <div className="flex">
       <Router>
         <Sidebar />
-        <div className="flex-grow">
+        <div className="flex-grow ml-64  transition-all">
           <Navbar />
           <Routes>
             <Route

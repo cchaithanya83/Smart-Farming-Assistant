@@ -40,11 +40,14 @@ const CropRecommendation: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 dark:bg-gray-800 shadow-md">
-      <h2 className="text-2xl font-bold text-gray-700 dark:text-white mb-4">
+    <div className="p-6 bg-gray-100 dark:bg-[#1d203a] shadow-md min-h-screen flex flex-col items-center">
+      <h2 className="text-2xl font-bold text-gray-700 dark:text-white mb-6 text-center">
         Crop Recommendation
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg space-y-4 bg-white dark:bg-[#1d203a] p-6 rounded-lg shadow-lg"
+      >
         {Object.keys(inputs).map((key) => (
           <div key={key}>
             <label className="block text-gray-700 dark:text-white mb-1">
@@ -55,7 +58,7 @@ const CropRecommendation: React.FC = () => {
               name={key}
               value={inputs[key]}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded dark:bg-[#1d203a] dark:text-white focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -71,11 +74,11 @@ const CropRecommendation: React.FC = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-lg w-96">
-            <h3 className="text-lg font-bold text-gray-700 dark:text-white mb-4">
+          <div className="bg-white dark:bg-[#1d203a] p-6 rounded shadow-lg w-11/12 max-w-md">
+            <h3 className="text-lg font-bold text-gray-700 dark:text-white mb-4 text-center">
               Recommended Crop
             </h3>
-            <p className="text-green-500 font-semibold text-lg mb-6">
+            <p className="text-green-500 font-semibold text-lg mb-6 text-center">
               {result}
             </p>
             <button

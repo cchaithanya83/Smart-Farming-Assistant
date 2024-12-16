@@ -6,8 +6,8 @@ const FertilizerRecommendation: React.FC = () => {
     temperature: "",
     humidity: "",
     moisture: "",
-    soilType: "",
-    cropType: "",
+    soil_type: "",
+    crop_type: "",
     nitrogen: "",
     potassium: "",
     phosphorous: "",
@@ -58,7 +58,7 @@ const FertilizerRecommendation: React.FC = () => {
                 .replace(/([A-Z])/g, " $1")
                 .replace(/^./, (str) => str.toUpperCase())}
             </label>
-            {key === "soilType" || key === "cropType" ? (
+            {key === "soil_type" || key === "crop_type" ? (
               <select
                 name={key}
                 value={inputs[key]}
@@ -67,26 +67,26 @@ const FertilizerRecommendation: React.FC = () => {
                 required
               >
                 <option value="">Select {key}</option>
-                {key === "soilType" ? (
+                {key === "soil_type" ? (
                   <>
-                    <option value="loamy">Loamy</option>
-                    <option value="sandy">Sandy</option>
-                    <option value="clay">Clay</option>
-                    <option value="saline">Saline</option>
-                    <option value="peaty">Peaty</option>
-                    <option value="chalky">Chalky</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Clayey">Clay</option>
+                    <option value="Saline">Saline</option>
+                    <option value="Peaty">Peaty</option>
+                    <option value="Chalky">Chalky</option>
                   </>
                 ) : (
                   <>
-                    <option value="wheat">Wheat</option>
-                    <option value="rice">Rice</option>
-                    <option value="corn">Corn</option>
-                    <option value="soybean">Soybean</option>
-                    <option value="potato">Potato</option>
-                    <option value="tomato">Tomato</option>
-                    <option value="barley">Barley</option>
-                    <option value="cotton">Cotton</option>
-                    <option value="sugarcane">Sugarcane</option>
+                    <option value="Barley">Barley</option>
+                    <option value="Maize">Maize</option>
+                    <option value="Oil seeds">Oil seeds</option>
+                    <option value="Tobacco">Tobacco</option>
+                    <option value="Ground Nuts">Ground Nuts</option>
+                    <option value="Sugarcane">Sugarcane</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Cotton">Cotton</option>
+                    <option value="Pulses">Pulses</option>
                   </>
                 )}
               </select>

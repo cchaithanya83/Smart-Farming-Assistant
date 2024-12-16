@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
       </ul>
 
       <footer className="text-sm text-gray-300 text-center mt-6">
-        &copy; 2024 Your Company
+        &copy; 2024 Bhoomi
       </footer>
     </aside>
   );

@@ -10,7 +10,7 @@ const char* ssid = "test";
 const char* password = "12345678";
 
 // Server URL
-const char* serverUrl = "https://edd3-2405-201-d00e-d0da-e5e0-69d7-a0f0-ac7c.ngrok-free.app/send-sensor-data/";
+const char* serverUrl = "https://6a80-103-89-232-66.ngrok-free.app/send-sensor-data/";
 
 // Define pin connections
 #define DHTPIN 4         // GPIO pin connected to the DATA pin of the DHT11
@@ -57,6 +57,9 @@ void loop() {
   int soilValue = analogRead(SOIL_PIN);
 
   // Check if DHT11 readings are valid
+  Serial.print(humidity);
+  Serial.print(temperature);
+
   if (isnan(humidity) || isnan(temperature)) {
     Serial.println("Failed to read from DHT sensor!");
     delay(2000);

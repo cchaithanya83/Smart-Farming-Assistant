@@ -26,11 +26,18 @@ const DiseaseDetection: React.FC = () => {
       return;
     }
 
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      setError("Please log in to continue.");
+      return;
+    }
+
     setError("");
     setLoading(true);
 
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("email", email);
 
     try {
       const response = await axios.post<PredictionResponse>(
@@ -45,6 +52,7 @@ const DiseaseDetection: React.FC = () => {
       setPrediction(response.data.prediction);
       setShowModal(true);
     } catch (err) {
+      console.error(err);
       setError("Failed to get a prediction. Please try again.");
     } finally {
       setLoading(false);

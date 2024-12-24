@@ -11,6 +11,8 @@ const Sidebar: React.FC = () => {
       <ul className="flex-1 flex flex-col justify-center space-y-6">
         {[
           { to: "/", label: "Home" },
+          { to: "/Dashboard", label: "Dashboard" },
+
           { to: "/crop-recommendation", label: "Crop Recommendation" },
           {
             to: "/fertilizer-recommendation",
@@ -18,6 +20,7 @@ const Sidebar: React.FC = () => {
           },
           { to: "/disease-detection", label: "Disease Detection" },
           { to: "/sensor-data", label: "Sensor Data" },
+          { to: "/about", label: "About" },
         ].map((item) => (
           <li key={item.to}>
             <Link

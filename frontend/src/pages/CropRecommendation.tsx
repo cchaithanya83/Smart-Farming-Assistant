@@ -21,7 +21,15 @@ const CropRecommendation: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const queryParams = new URLSearchParams(inputs).toString();
+    // Fetch email from local storage
+    const email = localStorage.getItem("userEmail");
+
+    if (!email) {
+      alert("Please log in to access crop recommendations.");
+      return;
+    }
+
+    const queryParams = new URLSearchParams({ ...inputs, email }).toString();
 
     try {
       const response = await axios.post(

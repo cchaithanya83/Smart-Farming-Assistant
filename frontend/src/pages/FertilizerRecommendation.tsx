@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FertilizerRecommendation: React.FC = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     temperature: "",
     humidity: "",
@@ -24,7 +26,18 @@ const FertilizerRecommendation: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const queryParams = new URLSearchParams(inputs).toString();
+    // Get the email from local storage
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      alert("Please log in to submit the data.");
+      return;
+    }
+
+    // Add the email to the API request
+    const queryParams = new URLSearchParams({
+      ...inputs,
+      email, // Append email to form data
+    }).toString();
 
     try {
       const response = await axios.post(

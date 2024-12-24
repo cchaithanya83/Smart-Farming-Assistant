@@ -7,6 +7,8 @@ import FertilizerRecommendation from "./pages/FertilizerRecommendation";
 import CropRecommendation from "./pages/CropRecommendation";
 import SensorData from "./pages/SensorData";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 
 const App: React.FC = () => {
   return (
@@ -17,7 +19,8 @@ const App: React.FC = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Dashboard" element={<Home />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/About" element={<About />} />
 
             <Route
               path="/crop-recommendation"

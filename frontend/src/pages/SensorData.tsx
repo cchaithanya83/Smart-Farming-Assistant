@@ -5,16 +5,33 @@ const SensorData = () => {
   const [sensorData, setSensorData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(0);
+
+  const ITEMS_PER_PAGE = 50;
 
   useEffect(() => {
-    // Fetch data from API
     const fetchSensorData = async () => {
+      const email = localStorage.getItem("userEmail");
+
+      // Redirect to login if email is not found
+      if (!email) {
+        alert("Please log in to continue.");
+        return;
+      }
+
       try {
+        // Include email as a query parameter
         const response = await axios.get(
-          "http://localhost:8000/get-sensor-data/"
+          `http://localhost:8000/get-sensor-data/?email=${email}`
         );
-        if (response.data?.data) {
-          setSensorData(response.data.data);
+
+        if (response.data?.sensor_data) {
+          // Sort by timestamp in descending order
+          const sortedData = response.data.sensor_data.sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          );
+          setSensorData(sortedData);
         } else {
           setSensorData([]);
         }
@@ -24,8 +41,13 @@ const SensorData = () => {
         setLoading(false);
       }
     };
+
     fetchSensorData();
   }, []);
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   if (loading) {
     return <div className="text-center mt-8">Loading...</div>;
@@ -34,6 +56,9 @@ const SensorData = () => {
   if (error) {
     return <div className="text-center mt-8 text-red-500">{error}</div>;
   }
+
+  // Paginate the data to show only the items for the current page
+  const paginatedData = sensorData.slice(0, (page + 1) * ITEMS_PER_PAGE);
 
   return (
     <div className="container mx-auto p-4">
@@ -52,7 +77,7 @@ const SensorData = () => {
               </tr>
             </thead>
             <tbody>
-              {sensorData.map((item, index) => (
+              {paginatedData.map((item, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="border border-gray-300 p-2 text-center">
                     {item.temperature}
@@ -70,6 +95,16 @@ const SensorData = () => {
               ))}
             </tbody>
           </table>
+          {paginatedData.length < sensorData.length && (
+            <div className="text-center mt-4">
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                onClick={handleLoadMore}
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

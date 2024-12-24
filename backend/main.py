@@ -17,6 +17,8 @@ from sqlalchemy.orm import sessionmaker, relationship
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+import pytz
+
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -249,18 +251,20 @@ async def receive_sensor_data(email: str, data: SensorDataModel, db: SessionLoca
 async def get_recommendations(email: str, db: SessionLocal = Depends(get_db)):
     try:
         recommendations = db.query(Recommendation).filter(Recommendation.email == email).all()
+        if not recommendations:
+            raise HTTPException(status_code=404, detail="No recommendations found for the specified email")
+        
+        # Add 5 hours 30 minutes manually
         return {"recommendations": [
             {
                 "type": rec.recommendation_type,
                 "recommendation": rec.recommendation,
-                "timestamp": rec.timestamp
+                "timestamp": (rec.timestamp + timedelta(hours=5, minutes=30)).isoformat()
             }
             for rec in recommendations
         ]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching recommendations: {str(e)}")
-
-
 
 @app.get("/get-sensor-data/")
 async def get_sensor_data(email: str, db: SessionLocal = Depends(get_db)):
@@ -268,14 +272,14 @@ async def get_sensor_data(email: str, db: SessionLocal = Depends(get_db)):
         sensor_data_entries = db.query(SensorData).filter(SensorData.email == email).all()
         if not sensor_data_entries:
             raise HTTPException(status_code=404, detail="No sensor data found for the specified email")
-
-        # Format the response
+        
+        # Add 5 hours 30 minutes manually
         return {"sensor_data": [
             {
                 "temperature": entry.temperature,
                 "humidity": entry.humidity,
                 "soil_moisture": entry.soil_moisture,
-                "timestamp": entry.timestamp
+                "timestamp": (entry.timestamp + timedelta(hours=5, minutes=30)).isoformat()
             }
             for entry in sensor_data_entries
         ]}

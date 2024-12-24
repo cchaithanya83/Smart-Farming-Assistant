@@ -6,6 +6,7 @@ import DiseaseDetection from "./pages/DiseaseDetection";
 import FertilizerRecommendation from "./pages/FertilizerRecommendation";
 import CropRecommendation from "./pages/CropRecommendation";
 import SensorData from "./pages/SensorData";
+import Home from "./pages/Home";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,9 @@ const App: React.FC = () => {
         <div className="flex-grow ml-64  transition-all">
           <Navbar />
           <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Dashboard" element={<Home />} />
+
             <Route
               path="/crop-recommendation"
               element={<CropRecommendation />}

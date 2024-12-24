@@ -10,6 +10,7 @@ const Sidebar: React.FC = () => {
 
       <ul className="flex-1 flex flex-col justify-center space-y-6">
         {[
+          { to: "/", label: "Home" },
           { to: "/crop-recommendation", label: "Crop Recommendation" },
           {
             to: "/fertilizer-recommendation",

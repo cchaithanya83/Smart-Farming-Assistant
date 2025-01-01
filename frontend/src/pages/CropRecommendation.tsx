@@ -14,6 +14,17 @@ const CropRecommendation: React.FC = () => {
   const [result, setResult] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  // Labels with full forms
+  const fieldLabels: { [key: string]: string } = {
+    N: "Nitrogen (N)",
+    P: "Phosphorus (P)",
+    K: "Potassium (K)",
+    temperature: "Temperature (°C)",
+    humidity: "Humidity (%)",
+    ph: "Soil pH",
+    rainfall: "Rainfall (mm)",
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
@@ -35,7 +46,10 @@ const CropRecommendation: React.FC = () => {
       const response = await axios.post(
         `http://localhost:8000/recommend-crop/?${queryParams}`
       );
-      setResult(response.data.recommended_crop);
+      const recommendedCrop = response.data.recommended_crop;
+      setResult(
+        `Based on the inputs, the best crop to grow is "${recommendedCrop}".`
+      );
       setShowModal(true); // Show the modal with the result
     } catch (error) {
       console.error("Error:", error);
@@ -59,7 +73,7 @@ const CropRecommendation: React.FC = () => {
         {Object.keys(inputs).map((key) => (
           <div key={key}>
             <label className="block text-gray-700 dark:text-white mb-1">
-              {key}
+              {fieldLabels[key]}
             </label>
             <input
               type="number"

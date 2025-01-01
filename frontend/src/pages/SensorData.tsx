@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 
 const SensorData = () => {
@@ -80,7 +80,7 @@ const SensorData = () => {
               {paginatedData.map((item, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="border border-gray-300 p-2 text-center">
-                    {item.temperature}
+                    {item.temperature }
                   </td>
                   <td className="border border-gray-300 p-2 text-center">
                     {item.humidity}

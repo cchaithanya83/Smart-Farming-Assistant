@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
           (a, b) =>
             new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
-        setRecommendations(sortedRecommendations.slice(0, 10)); // Keep only the latest 6
+        setRecommendations(sortedRecommendations); // Keep only the latest 6
       } catch (error) {
         console.error("Error fetching recommendations", error);
       }
@@ -57,15 +57,16 @@ const Dashboard: React.FC = () => {
     }
   }, [userEmail]);
 
-  const handleThemeToggle = () => {
-    setDarkMode(!darkMode);
-  };
 
   // Recommendations by type (grouping)
   const groupedRecommendations = {
-    plantDisease: recommendations.filter((rec) => rec.type === "plant_disease"),
-    crop: recommendations.filter((rec) => rec.type === "crop"),
-    fertilizer: recommendations.filter((rec) => rec.type === "fertilizer"),
+    plantDisease: recommendations
+      .filter((rec) => rec.type === "plant_disease")
+      .slice(0, 6), // Keep only the latest 6
+    crop: recommendations.filter((rec) => rec.type === "crop").slice(0, 6), // Keep only the latest 6
+    fertilizer: recommendations
+      .filter((rec) => rec.type === "fertilizer")
+      .slice(0, 6), // Keep only the latest 6
   };
 
   const moistureLevel =

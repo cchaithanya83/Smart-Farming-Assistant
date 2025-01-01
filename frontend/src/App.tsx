@@ -9,6 +9,7 @@ import SensorData from "./pages/SensorData";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
+import Info from "./pages/Info";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Info" element={<Info/>} />
             <Route path="/About" element={<About />} />
 
             <Route
